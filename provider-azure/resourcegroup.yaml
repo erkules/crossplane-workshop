@@ -1,0 +1,9 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: storage
+spec:
+  forProvider:
+    location: "northeurope"
+  providerConfigRef:
+    name: azure

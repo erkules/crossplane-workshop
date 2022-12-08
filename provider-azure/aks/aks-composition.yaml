@@ -1,0 +1,92 @@
+# Vorlage via Victor und auf neuen Provider gehieved
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: cluster-azure
+  labels:
+    crossplane.io/xrd: clusters.example.org
+    provider: azure
+    cluster: aks
+spec:
+  compositeTypeRef:
+    apiVersion: example.org/v1alpha1
+    kind: Clusters
+  writeConnectionSecretsToNamespace: crossplane-system
+  patchSets:
+  - name: metadata
+    patches:
+    - fromFieldPath: metadata.labels
+  resources:
+  - name: resourcegroup
+    base:
+      apiVersion:  azure.upbound.io/v1beta1
+      kind: ResourceGroup
+      spec:
+        providerConfigRef:
+          name: azure
+        forProvider:
+          location: northeurope
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.forProvider.name
+  - name: aks
+    base:
+      apiVersion: containerservice.azure.upbound.io/v1beta1
+      kind: KubernetesCluster
+      spec:
+        providerConfigRef:
+          name: azure
+        forProvider:
+          location: northeurope
+          dnsPrefix: dot
+          kubernetesVersion: #
+          defaultNodePool:
+          - maxCount: 2
+            enableAutoScaling: true
+            vmSize: Standard_D2_v2
+          identity:
+            - type: SystemAssigned
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.forProvider.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.writeConnectionSecretToRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-cluster"
+    - fromFieldPath: spec.id
+      toFieldPath: spec.forProvider.defaultNodePool[0].name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.forProvider.resourceGroupName
+    - fromFieldPath: spec.parameters.version
+      toFieldPath: spec.forProvider.kubernetesVersion
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.forProvider.defaultNodePool[0].minCount
+    - fromFieldPath: spec.parameters.nodeSize
+      toFieldPath: spec.forProvider.defaultNodePool[0].vmSize
+      transforms:
+      - type: map
+        map:
+          small: Standard_D2_v2
+          medium: Standard_D4_v2
+          large: Standard_D16_v3
+    - type: ToCompositeFieldPath
+      fromFieldPath: metadata.name
+      toFieldPath: status.clusterName
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.conditions[0].status
+      toFieldPath: status.controlPlaneStatus
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.conditions[0].status
+      toFieldPath: status.nodePoolStatus
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    connectionDetails:
+    - fromConnectionSecretKey: kubeconfig
+    - fromConnectionSecretKey: kubeconfig
+      name: value

@@ -1,0 +1,27 @@
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: kubernetes-provider-deploy
+spec:
+  forProvider:
+    manifest:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        # name in manifest is optional and defaults to Object name
+        # name: some-other-name
+        namespace: default
+      spec:
+        selector:
+          matchLabels:
+            a: b
+        template:
+          metadata:
+            labels: 
+              a: b
+          spec:
+            containers:
+            - name: jo
+              image: erkules/nginxhostname:v1
+  providerConfigRef:
+    name: kubernetes-provider

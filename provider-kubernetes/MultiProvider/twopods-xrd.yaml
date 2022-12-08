@@ -1,0 +1,30 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xtwopods.acme.example.org
+spec:
+  connectionSecretKeys:
+    - kubeconfig
+  group: acme.example.org
+  names:
+    # 
+    kind:     xtwopods
+    plural:   xtwopods 
+  claimNames:           # Claims are namespaced Objects
+    kind:     twopods
+    plural: twopods
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          descrition: A simple Kafka Cluster
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                lala:
+                  type: string
+                  description: nobody cares
