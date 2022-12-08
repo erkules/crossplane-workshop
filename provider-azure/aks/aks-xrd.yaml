@@ -10,7 +10,7 @@ spec:
     #  name: xxxx
   group: example.org
   names:
-    kind:   Cluster
+    kind:   Clusters
     plural: clusters
   claimNames:
     kind:   K8s
