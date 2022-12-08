@@ -1,0 +1,16 @@
+apiVersion: storage.azure.upbound.io/v1beta1
+kind: Account
+metadata:
+  name: astorage
+spec:
+  forProvider:
+    resourceGroupName: storage
+    location: northeurope
+    accountReplicationType: LRS
+    accountTier:  Standard
+    accessTier:   Cool
+  providerConfigRef:
+    name: azure
+  writeConnectionSecretToRef:
+    namespace: default
+    name: storageaccount-connection-secret 

@@ -1,0 +1,58 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xtwopods.acme.example.org
+  labels:
+    provider: kubernetes-provider
+    crossplane.io/xrd: xtwopods.acme.example.org
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: acme.example.org/v1alpha1
+    kind: xtwopods
+  resources:
+    #- name: pod1
+    - base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          providerConfigRef: 
+            name:  'kubernetes-provider'
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                name: kubernetes-provider-pod1
+              spec:
+                containers:
+                - name: jo
+                  image: erkules/nginxhostname:v1
+                    #          providerConfigRef:
+                    #            name: kubernetes-provider
+      patches:
+      - fromFieldPath: "metadata.labels[crossplane.io/claim-namespace]"
+        toFieldPath:   "spec.forProvider.manifest.metadata.namespace"
+                    #  policy:
+                    #    fromFieldPath: Required
+                    #    #- name: pod2
+    - base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          providerConfigRef: 
+            name:  'kubernetes-provider'
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                name: kubernetes-provider-pod2
+              spec:
+                containers:
+                - name: jo
+                  image: erkules/nginxhostname:v1
+      patches:
+      - fromFieldPath: "metadata.labels[crossplane.io/claim-namespace]"
+        toFieldPath:   "spec.forProvider.manifest.metadata.namespace"
+ 

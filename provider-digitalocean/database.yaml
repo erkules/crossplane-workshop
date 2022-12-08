@@ -1,0 +1,22 @@
+# doctl databases options engines list
+# doctl databases options regions list
+# doctl compute droplet list
+#
+#
+#
+---
+apiVersion: database.do.crossplane.io/v1alpha1
+kind: DODatabaseCluster
+metadata:
+  name: mysql
+spec:
+  forProvider:
+    engine: mysql
+    version: "8"
+    numNodes: 1
+    size: db-s-2vcpu-4gb
+    region: fra1
+    tags:
+      - "from-crossplane"
+  providerConfigRef:
+    name: digitalocean

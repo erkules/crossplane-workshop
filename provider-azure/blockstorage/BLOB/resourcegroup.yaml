@@ -1,0 +1,14 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1beta1/blob
+  labels:
+    testing.upbound.io/example-name: example-storage-blob
+  name: linsenraum-de
+spec:
+  providerConfigRef:
+    name: azure
+  forProvider:
+    location: northeurope
+

@@ -1,0 +1,7 @@
+# So clean 
+kind:        xtwopods
+apiVersion:  acme.example.org/v1alpha1
+metadata:
+  name:      xtwopods
+spec:
+  lala:      oha

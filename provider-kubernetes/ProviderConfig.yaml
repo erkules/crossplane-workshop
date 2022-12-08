@@ -1,0 +1,29 @@
+### If we empower the ServiceAccount
+---
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: kubernetes-provider
+spec:
+  credentials:
+    source: InjectedIdentity
+
+#---
+#apiVersion: kubernetes.crossplane.io/v1alpha1
+#kind: ProviderConfig
+#metadata:
+#  name: kubernetes-provider
+#spec:
+#  credentials:
+#    source: Secret
+#    secretRef:
+#      namespace: crossplane-system
+#      name: cluster-config
+#      key: kubeconfig
+## identity:
+#   type: GoogleApplicationCredentials
+#   source: Secret
+#   secretRef:
+#     name: gcp-credentials
+#     namespace: crossplane-system
+#     key: credentials.json

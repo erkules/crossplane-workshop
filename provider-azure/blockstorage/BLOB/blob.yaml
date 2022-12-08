@@ -1,0 +1,23 @@
+# https://raw.githubusercontent.com/upbound/provider-azure/main/examples/storage/blob.yaml
+apiVersion: storage.azure.upbound.io/v1beta1
+kind: Blob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1beta1/blob
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  providerConfigRef:
+    name: azure
+
+  forProvider:
+    sourceContent: inline content for this blob
+    storageAccountNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    storageContainerNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    type: Block
+

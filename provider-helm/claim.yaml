@@ -1,0 +1,6 @@
+apiVersion: acme.example.org/v1alpha1
+kind:       kafka
+metadata:
+  name: myxrkafka
+spec:
+  anzahl: 2

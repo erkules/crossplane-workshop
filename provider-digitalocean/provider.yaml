@@ -1,0 +1,7 @@
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-do
+spec:
+  package: xpkg.upbound.io/digitalocean/provider-digitalocean:v0.2.0

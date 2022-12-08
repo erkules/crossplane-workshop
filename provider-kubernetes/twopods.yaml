@@ -1,0 +1,8 @@
+# So clean 
+kind:        twopods
+apiVersion:  acme.example.org/v1alpha1
+metadata:
+  name:      twopods
+  namespace: hallo
+spec:
+  lala:      hallo

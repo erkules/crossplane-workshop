@@ -1,0 +1,31 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xcoco.linsenraum.de
+spec:
+  connectionSecretKeys:
+    - kubeconfig
+  group: linsenraum.de
+  names:
+    # 
+    kind:     Xcoco
+    plural:   xcoco 
+  claimNames:
+    kind:     coco
+    plural:   coco
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          descrition: Watchtower
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                vanilla:
+                  type: string
+                  description: random
+                  default: "ihh"

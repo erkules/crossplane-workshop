@@ -1,0 +1,29 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: kafka.acme.example.org
+  labels:
+    provider: provider-helm 
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: acme.example.org/v1alpha1
+    kind: kafka
+  resources:
+    - base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: Release
+        spec:
+          providerConfigRef: 
+            name:      'helm-provider'
+          forProvider:
+            namespace: default
+            chart:
+              name:       kafka
+              repository: https://charts.bitnami.com/bitnami
+            values:
+              replicas: 1
+      patches:
+        - fromFieldPath: "spec.anzahl"
+          toFieldPath: "spec.forProvider.values.replicas"
+ 
