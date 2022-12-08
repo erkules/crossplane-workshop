@@ -1,15 +1,14 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: xtwopods.acme.example.org
+  name: xselect.acme.example.org
   labels:
-    provider: kubernetes-provider
-    crossplane.io/xrd: xtwopods.acme.example.org
+    hallo: gold
 spec:
   writeConnectionSecretsToNamespace: crossplane-system
   compositeTypeRef:
     apiVersion: acme.example.org/v1alpha1
-    kind: xtwopods
+    kind: xselect
   resources:
     #- name: pod1
     - base:

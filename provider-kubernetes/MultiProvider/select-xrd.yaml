@@ -1,18 +1,18 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xtwopods.acme.example.org
+  name: xselect.acme.example.org
 spec:
   connectionSecretKeys:
     - kubeconfig
   group: acme.example.org
   names:
     # 
-    kind:     xtwopods
-    plural:   xtwopods 
+    kind:     xselect
+    plural:   xselect 
   claimNames:           # Claims are namespaced Objects
-    kind:     twopods
-    plural: twopods
+    kind:     select
+    plural: select
   versions:
     - name: v1alpha1
       served: true

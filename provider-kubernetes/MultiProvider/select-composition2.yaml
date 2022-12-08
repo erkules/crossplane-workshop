@@ -1,0 +1,38 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xselect2.acme.example.org
+  labels:
+    hallo: welt
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: acme.example.org/v1alpha1
+    kind: xselect
+  resources:
+    #- name: pod1
+    - base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          providerConfigRef: 
+            name:  'kubernetes-provider'
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                name: binalleine
+              spec:
+                containers:
+                - name: jo
+                  image: erkules/nginxhostname:v1
+                    #          providerConfigRef:
+                    #            name: kubernetes-provider
+      patches:
+      - fromFieldPath: "metadata.labels[crossplane.io/claim-namespace]"
+        toFieldPath:   "spec.forProvider.manifest.metadata.namespace"
+                    #  policy:
+                    #    fromFieldPath: Required
+                    #    #- name: pod2
+ 
